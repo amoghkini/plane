@@ -149,9 +149,10 @@ export const SignInView = observer(() => {
     }
   };
 
-  const handlePasswordSignIn = (formData: EmailPasswordFormValues) => {
+  const handlePasswordSignIn = async (formData: EmailPasswordFormValues) => {
     setLoading(true);
-    return authService
+
+    return await authService
       .emailLogin(formData)
       .then(() => {
         mutateUserInfo();
@@ -231,48 +232,45 @@ export const SignInView = observer(() => {
                 </div>
               ) : (
                 <>
-                  <>
-                    {enableEmailPassword && <EmailPasswordForm onSubmit={handlePasswordSignIn} />}
-                    {envConfig?.magic_login && (
-                      <div className="sm:w-96 mx-auto flex flex-col divide-y divide-custom-border-200">
-                        <div className="pb-2">
-                          <EmailCodeForm authType={authType} handleSignIn={handleEmailCodeSignIn} />
-                        </div>
-                      </div>
-                    )}
-                    <div className="flex sm:w-96 items-center mt-4 mx-auto">
-                      <hr className={`border-onboarding-border-100 w-full`} />
-                      <p className="text-center text-sm text-onboarding-text-400 mx-3 flex-shrink-0">
-                        Or continue with
-                      </p>
-                      <hr className={`border-onboarding-border-100 w-full`} />
-                    </div>
-                    <div className="flex flex-col items-center justify-center gap-4 pt-7 sm:flex-row sm:w-96 mx-auto overflow-hidden">
-                      {envConfig?.google_client_id && (
-                        <GoogleLoginButton clientId={envConfig?.google_client_id} handleSignIn={handleGoogleSignIn} />
-                      )}
-                      {envConfig?.github_client_id && (
-                        <GithubLoginButton
-                          authType={authType}
-                          clientId={envConfig?.github_client_id}
-                          handleSignIn={handleGitHubSignIn}
-                        />
+                  <div className="sm:w-96 mx-auto flex flex-col divide-y divide-custom-border-200">
+                    <div className="pb-2">
+                      {envConfig.magic_login ? (
+                        <EmailCodeForm authType={authType} handleSignIn={handleEmailCodeSignIn} />
+                      ) : (
+                        <EmailPasswordForm onSubmit={handlePasswordSignIn} />
                       )}
                     </div>
-                    {authType === "sign-up" && (
-                      <div className="sm:w-96 text-center mx-auto mt-6 text-onboarding-text-400 text-sm">
-                        Already using Plane?{" "}
-                        <span
-                          className="text-custom-primary-80 hover text-sm font-medium underline hover:cursor-pointer"
-                          onClick={() => {
-                            setAuthType("sign-in");
-                          }}
-                        >
-                          Sign in
-                        </span>
-                      </div>
+                  </div>
+                  <div className="flex sm:w-96 items-center mt-4 mx-auto">
+                    <hr className={`border-onboarding-border-100 w-full`} />
+                    <p className="text-center text-sm text-onboarding-text-400 mx-3 flex-shrink-0">Or continue with</p>
+                    <hr className={`border-onboarding-border-100 w-full`} />
+                  </div>
+                  <div className="flex flex-col items-center justify-center gap-4 pt-7 sm:flex-row sm:w-96 mx-auto overflow-hidden">
+                    {envConfig?.google_client_id && (
+                      <GoogleLoginButton clientId={envConfig?.google_client_id} handleSignIn={handleGoogleSignIn} />
                     )}
-                  </>
+                    {envConfig?.github_client_id && (
+                      <GithubLoginButton
+                        authType={authType}
+                        clientId={envConfig?.github_client_id}
+                        handleSignIn={handleGitHubSignIn}
+                      />
+                    )}
+                  </div>
+                  {authType === "sign-up" && (
+                    <div className="sm:w-96 text-center mx-auto mt-6 text-onboarding-text-400 text-sm">
+                      Already using Plane?{" "}
+                      <span
+                        className="text-custom-primary-80 hover text-sm font-medium underline hover:cursor-pointer"
+                        onClick={() => {
+                          setAuthType("sign-in");
+                        }}
+                      >
+                        Sign in
+                      </span>
+                    </div>
+                  )}
                   <div
                     className={`flex py-2 bg-onboarding-background-100 border border-onboarding-border-200 mx-auto rounded-[3.5px] sm:w-96 mt-16`}
                   >

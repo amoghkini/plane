@@ -35,7 +35,15 @@ export const EmailPasswordForm: React.FC<IEmailPasswordForm> = (props) => {
 
   return (
     <>
-      <form className="space-y-4 mt-10 w-full sm:w-[360px] mx-auto" onSubmit={handleSubmit(onSubmit)}>
+      <h1 className="text-center text-2xl sm:text-2.5xl font-semibold text-custom-text-100">
+        Get on your flight deck!
+      </h1>
+      <div className="text-center text-sm text-onboarding-text-200 mt-3">
+        <p className="text-center text-sm text-onboarding-text-200 px-20 mt-3">
+          Sign in with the email you used to sign up for Plane
+        </p>
+      </div>
+      <form className="space-y-4 mt-5 sm:w-96 mx-auto" onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-1">
           <Controller
             control={control}
@@ -109,7 +117,7 @@ export const EmailPasswordForm: React.FC<IEmailPasswordForm> = (props) => {
             onClick={() => router.push("/accounts/sign-up")}
             className="text-custom-text-200 hover:text-custom-primary-100"
           >
-            {"Don't have an account? Sign Up"}
+            Don{"'"}t have an account? Sign up
           </button>
         </div>
       </form>
