@@ -13,9 +13,8 @@ import { replaceUnderscoreIfSnakeCase, truncateText, stripAndTruncateHTML } from
 import {
   formatDateDistance,
   render12HourFormatTime,
-  renderLongDateFormat,
   renderShortDate,
-  renderShortDateWithYearFormat,
+  renderFormattedDate,
 } from "helpers/date-time.helper";
 // type
 import type { IUserNotification } from "types";
@@ -112,7 +111,7 @@ export const NotificationCard: React.FC<NotificationCardProps> = (props) => {
               {notification.data.issue_activity.field !== "None" ? (
                 notification.data.issue_activity.field !== "comment" ? (
                   notification.data.issue_activity.field === "target_date" ? (
-                    renderShortDateWithYearFormat(notification.data.issue_activity.new_value)
+                    renderFormattedDate(notification.data.issue_activity.new_value)
                   ) : notification.data.issue_activity.field === "attachment" ? (
                     "the issue"
                   ) : notification.data.issue_activity.field === "description" ? (
@@ -233,7 +232,7 @@ export const NotificationCard: React.FC<NotificationCardProps> = (props) => {
 
                   markSnoozeNotification(notification.id, item.value).then(() => {
                     setToastAlert({
-                      title: `Notification snoozed till ${renderLongDateFormat(item.value)}`,
+                      title: `Notification snoozed till ${renderFormattedDate(item.value)}`,
                       type: "success",
                     });
                   });

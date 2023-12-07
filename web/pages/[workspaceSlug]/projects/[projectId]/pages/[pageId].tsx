@@ -20,7 +20,7 @@ import { Spinner } from "@plane/ui";
 // assets
 import emptyPage from "public/empty-state/page.svg";
 // helpers
-import { renderDateFormat } from "helpers/date-time.helper";
+import { renderFormattedPayloadDate } from "helpers/date-time.helper";
 // types
 import { NextPageWithLayout } from "types/app";
 import { IPage, IIssue } from "types";
@@ -59,7 +59,7 @@ const PageDetailsPage: NextPageWithLayout = observer(() => {
 
   const { user } = useUser();
 
-  const { handleSubmit, reset, setValue, watch, getValues, control } = useForm<IPage>({
+  const { handleSubmit, setValue, watch, getValues, control } = useForm<IPage>({
     defaultValues: { name: "", description_html: "" },
   });
 
@@ -112,7 +112,7 @@ const PageDetailsPage: NextPageWithLayout = observer(() => {
     return issue as IIssue;
   };
 
-  const issueWidgetClickAction = (issueId: string, issueTitle: string) => {
+  const issueWidgetClickAction = (issueId: string) => {
     const url = new URL(router.asPath, window.location.origin);
     const params = new URLSearchParams(url.search);
 
@@ -156,7 +156,7 @@ const PageDetailsPage: NextPageWithLayout = observer(() => {
     if (pageDetails?.description_html) {
       setLocalIssueDescription({ id: pageId as string, description_html: pageDetails.description_html });
     }
-  }, [pageDetails?.description_html]);
+  }, [pageDetails?.description_html, pageId]);
 
   function createObjectFromArray(keys: string[], options: any): any {
     return keys.reduce((obj, key) => {
@@ -176,7 +176,7 @@ const PageDetailsPage: NextPageWithLayout = observer(() => {
     const commonSwrOptions: MutatorOptions = {
       revalidate: true,
       populateCache: false,
-      rollbackOnError: (e) => {
+      rollbackOnError: () => {
         onErrorAction();
         return true;
       },
@@ -255,7 +255,7 @@ const PageDetailsPage: NextPageWithLayout = observer(() => {
     mutatePageDetailsHelper(
       pageService.archivePage(workspaceSlug.toString(), projectId.toString(), pageId.toString()),
       {
-        archived_at: renderDateFormat(new Date()),
+        archived_at: renderFormattedPayloadDate(new Date()),
       },
       ["description_html"],
       () =>
@@ -407,7 +407,7 @@ const PageDetailsPage: NextPageWithLayout = observer(() => {
                 <Controller
                   name="description_html"
                   control={control}
-                  render={({ field: { value, onChange } }) => (
+                  render={({ field: { onChange } }) => (
                     <DocumentEditorWithRef
                       isSubmitting={isSubmitting}
                       documentDetails={{

@@ -3,7 +3,7 @@ import { CustomDatePicker } from "components/ui";
 import { Tooltip } from "@plane/ui";
 import { CalendarDays } from "lucide-react";
 // helpers
-import { renderShortDate, renderShortDateWithYearFormat, renderShortMonthDate } from "helpers/date-time.helper";
+import { renderShortDate, renderFormattedDate, renderShortMonthDate } from "helpers/date-time.helper";
 // types
 import { IIssue } from "types";
 
@@ -37,7 +37,7 @@ export const ViewStartDateSelect: React.FC<Props> = ({
   return (
     <Tooltip
       tooltipHeading="Start date"
-      tooltipContent={issue.start_date ? renderShortDateWithYearFormat(issue.start_date) ?? "N/A" : "N/A"}
+      tooltipContent={issue.start_date ? renderFormattedDate(issue.start_date) ?? "N/A" : "N/A"}
       position={tooltipPosition}
     >
       <div className={`group flex-shrink-0 max-w-[6.5rem] ${className}`}>

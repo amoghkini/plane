@@ -7,10 +7,11 @@ import { useMobxStore } from "lib/mobx/store-provider";
 import { CalendarIssueBlocks, ICalendarDate, CalendarQuickAddIssueForm } from "components/issues";
 // helpers
 import { renderDateFormat } from "helpers/date-time.helper";
-// constants
-import { MONTHS_LIST } from "constants/calendar";
+// types
 import { IIssue } from "types";
 import { IGroupedIssues, IIssueResponse } from "store/issues/types";
+// constants
+import { MONTHS_LIST } from "constants/calendar";
 
 type Props = {
   date: ICalendarDate;

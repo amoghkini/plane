@@ -19,7 +19,7 @@ import { AlertCircle, ChevronDown, ChevronRight, Info, LinkIcon, MoveRight, Plus
 // helpers
 import {
   isDateGreaterThanToday,
-  renderDateFormat,
+  renderFormattedPayloadDate,
   renderShortDate,
   renderShortMonthDate,
 } from "helpers/date-time.helper";
@@ -175,8 +175,8 @@ export const ModuleDetailsSidebar: React.FC<Props> = observer((props) => {
       }
 
       submitChanges({
-        start_date: renderDateFormat(`${watch("start_date")}`),
-        target_date: renderDateFormat(`${watch("target_date")}`),
+        start_date: renderFormattedPayloadDate(`${watch("start_date")}`),
+        target_date: renderFormattedPayloadDate(`${watch("target_date")}`),
       });
       setToastAlert({
         type: "success",
@@ -200,8 +200,8 @@ export const ModuleDetailsSidebar: React.FC<Props> = observer((props) => {
       }
 
       submitChanges({
-        start_date: renderDateFormat(`${watch("start_date")}`),
-        target_date: renderDateFormat(`${watch("target_date")}`),
+        start_date: renderFormattedPayloadDate(`${watch("start_date")}`),
+        target_date: renderFormattedPayloadDate(`${watch("target_date")}`),
       });
       setToastAlert({
         type: "success",

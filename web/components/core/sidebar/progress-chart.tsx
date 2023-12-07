@@ -1,9 +1,9 @@
 import React from "react";
-
+import { eachDayOfInterval } from "date-fns";
 // ui
 import { LineGraph } from "components/ui";
 // helpers
-import { getDatesInRange, renderShortNumericDateFormat } from "helpers/date-time.helper";
+import { renderShortNumericDateFormat } from "helpers/date-time.helper";
 //types
 import { TCompletionChartDistribution } from "types";
 
@@ -47,7 +47,7 @@ const ProgressChart: React.FC<Props> = ({ distribution, startDate, endDate, tota
   }));
 
   const generateXAxisTickValues = () => {
-    const dates = getDatesInRange(startDate, endDate);
+    const dates = eachDayOfInterval({ start: new Date(startDate), end: new Date(endDate) });
 
     const maxDates = 4;
     const totalDates = dates.length;

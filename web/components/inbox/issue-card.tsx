@@ -6,7 +6,7 @@ import { Tooltip, PriorityIcon } from "@plane/ui";
 // icons
 import { AlertTriangle, CalendarDays, CheckCircle2, Clock, Copy, XCircle } from "lucide-react";
 // helpers
-import { renderShortDateWithYearFormat } from "helpers/date-time.helper";
+import { renderFormattedDate } from "helpers/date-time.helper";
 // types
 import { IInboxIssue } from "types";
 // constants
@@ -43,13 +43,10 @@ export const InboxIssueCard: React.FC<Props> = (props) => {
           <Tooltip tooltipHeading="Priority" tooltipContent={`${issue.priority ?? "None"}`}>
             <PriorityIcon priority={issue.priority ?? null} className="h-3.5 w-3.5" />
           </Tooltip>
-          <Tooltip
-            tooltipHeading="Created on"
-            tooltipContent={`${renderShortDateWithYearFormat(issue.created_at ?? "")}`}
-          >
+          <Tooltip tooltipHeading="Created on" tooltipContent={`${renderFormattedDate(issue.created_at ?? "")}`}>
             <div className="flex items-center gap-1 rounded border border-custom-border-200 shadow-sm text-xs px-2 py-[0.19rem] text-custom-text-200">
               <CalendarDays size={12} strokeWidth={1.5} />
-              <span>{renderShortDateWithYearFormat(issue.created_at ?? "")}</span>
+              <span>{renderFormattedDate(issue.created_at ?? "")}</span>
             </div>
           </Tooltip>
         </div>

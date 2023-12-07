@@ -1,5 +1,8 @@
 import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { observer } from "mobx-react-lite";
+// mobx store
+import { useMobxStore } from "lib/mobx/store-provider";
 // components
 import EmojiIconPicker from "components/emoji-icon-picker";
 import { ImagePickerPopover } from "components/core";
@@ -8,14 +11,13 @@ import { Button, CustomSelect, Input, TextArea } from "@plane/ui";
 import { IProject, IWorkspace } from "types";
 // helpers
 import { renderEmoji } from "helpers/emoji.helper";
-import { renderShortDateWithYearFormat } from "helpers/date-time.helper";
+import { renderFormattedDate } from "helpers/date-time.helper";
 // constants
 import { NETWORK_CHOICES } from "constants/project";
 // services
 import { ProjectService } from "services/project";
 // hooks
 import useToast from "hooks/use-toast";
-import { useMobxStore } from "lib/mobx/store-provider";
 
 export interface IProjectDetailsForm {
   project: IProject;
@@ -25,10 +27,14 @@ export interface IProjectDetailsForm {
 
 const projectService = new ProjectService();
 
-export const ProjectDetailsForm: FC<IProjectDetailsForm> = (props) => {
+export const ProjectDetailsForm: FC<IProjectDetailsForm> = observer((props) => {
   const { project, workspaceSlug, isAdmin } = props;
   // store
-  const { project: projectStore, trackEvent: { postHogEventTracker }, workspace: { currentWorkspace } } = useMobxStore();
+  const {
+    project: projectStore,
+    trackEvent: { postHogEventTracker },
+    workspace: { currentWorkspace },
+  } = useMobxStore();
   // toast
   const { setToastAlert } = useToast();
   // form data
@@ -63,12 +69,12 @@ export const ProjectDetailsForm: FC<IProjectDetailsForm> = (props) => {
       .updateProject(workspaceSlug.toString(), project.id, payload)
       .then((res) => {
         postHogEventTracker(
-          'PROJECT_UPDATED',
+          "PROJECT_UPDATED",
           { ...res, state: "SUCCESS" },
           {
             isGrouping: true,
             groupType: "Workspace_metrics",
-            gorupId: res.workspace
+            gorupId: res.workspace,
           }
         );
         setToastAlert({
@@ -79,14 +85,14 @@ export const ProjectDetailsForm: FC<IProjectDetailsForm> = (props) => {
       })
       .catch((error) => {
         postHogEventTracker(
-          'PROJECT_UPDATED',
+          "PROJECT_UPDATED",
           {
-            state: "FAILED"
+            state: "FAILED",
           },
           {
             isGrouping: true,
             groupType: "Workspace_metrics",
-            gorupId: currentWorkspace?.id!
+            gorupId: currentWorkspace?.id!,
           }
         );
         setToastAlert({
@@ -295,11 +301,11 @@ export const ProjectDetailsForm: FC<IProjectDetailsForm> = (props) => {
               {isSubmitting ? "Updating Project..." : "Update Project"}
             </Button>
             <span className="text-sm text-custom-sidebar-text-400 italic">
-              Created on {renderShortDateWithYearFormat(project?.created_at)}
+              Created on {renderFormattedDate(project?.created_at)}
             </span>
           </>
         </div>
       </div>
     </form>
   );
-};
+});

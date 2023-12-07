@@ -6,7 +6,7 @@ import { CalendarDays } from "lucide-react";
 import {
   findHowManyDaysLeft,
   renderShortDate,
-  renderShortDateWithYearFormat,
+  renderFormattedDate,
   renderShortMonthDate,
 } from "helpers/date-time.helper";
 // types
@@ -43,7 +43,7 @@ export const ViewDueDateSelect: React.FC<Props> = ({
   return (
     <Tooltip
       tooltipHeading="Due date"
-      tooltipContent={issue.target_date ? renderShortDateWithYearFormat(issue.target_date) ?? "N/A" : "N/A"}
+      tooltipContent={issue.target_date ? renderFormattedDate(issue.target_date) ?? "N/A" : "N/A"}
       position={tooltipPosition}
     >
       <div

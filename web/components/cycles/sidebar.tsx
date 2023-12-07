@@ -24,7 +24,7 @@ import {
   findHowManyDaysLeft,
   getDateRangeStatus,
   isDateGreaterThanToday,
-  renderDateFormat,
+  renderFormattedPayloadDate,
   renderShortDate,
   renderShortMonthDate,
 } from "helpers/date-time.helper";
@@ -128,8 +128,8 @@ export const CycleDetailsSidebar: React.FC<Props> = observer((props) => {
 
         if (isDateValidForExistingCycle) {
           submitChanges({
-            start_date: renderDateFormat(`${watch("start_date")}`),
-            end_date: renderDateFormat(`${watch("end_date")}`),
+            start_date: renderFormattedPayloadDate(`${watch("start_date")}`),
+            end_date: renderFormattedPayloadDate(`${watch("end_date")}`),
           });
           setToastAlert({
             type: "success",
@@ -155,8 +155,8 @@ export const CycleDetailsSidebar: React.FC<Props> = observer((props) => {
 
       if (isDateValid) {
         submitChanges({
-          start_date: renderDateFormat(`${watch("start_date")}`),
-          end_date: renderDateFormat(`${watch("end_date")}`),
+          start_date: renderFormattedPayloadDate(`${watch("start_date")}`),
+          end_date: renderFormattedPayloadDate(`${watch("end_date")}`),
         });
         setToastAlert({
           type: "success",
@@ -196,8 +196,8 @@ export const CycleDetailsSidebar: React.FC<Props> = observer((props) => {
 
         if (isDateValidForExistingCycle) {
           submitChanges({
-            start_date: renderDateFormat(`${watch("start_date")}`),
-            end_date: renderDateFormat(`${watch("end_date")}`),
+            start_date: renderFormattedPayloadDate(`${watch("start_date")}`),
+            end_date: renderFormattedPayloadDate(`${watch("end_date")}`),
           });
           setToastAlert({
             type: "success",
@@ -223,8 +223,8 @@ export const CycleDetailsSidebar: React.FC<Props> = observer((props) => {
 
       if (isDateValid) {
         submitChanges({
-          start_date: renderDateFormat(`${watch("start_date")}`),
-          end_date: renderDateFormat(`${watch("end_date")}`),
+          start_date: renderFormattedPayloadDate(`${watch("start_date")}`),
+          end_date: renderFormattedPayloadDate(`${watch("end_date")}`),
         });
         setToastAlert({
           type: "success",

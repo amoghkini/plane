@@ -1,10 +1,5 @@
 import { format } from "date-fns";
 
-export const addDays = ({ date, days }: { date: Date; days: number }): Date => {
-  date.setDate(date.getDate() + days);
-  return date;
-};
-
 export const renderDateFormat = (date: string | Date | null | undefined, dayFirst: boolean = false) => {
   if (!date) return "N/A";
 
@@ -25,33 +20,11 @@ export const renderShortNumericDateFormat = (date: string | Date) =>
     month: "short",
   });
 
-export const renderLongDetailDateFormat = (date: string | Date) =>
-  new Date(date).toLocaleDateString("en-UK", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-
 export const findHowManyDaysLeft = (date: string | Date) => {
   const today = new Date();
   const eventDate = new Date(date);
   const timeDiff = Math.abs(eventDate.getTime() - today.getTime());
   return Math.ceil(timeDiff / (1000 * 3600 * 24));
-};
-
-export const getDatesInRange = (startDate: string | Date, endDate: string | Date) => {
-  startDate = new Date(startDate);
-  endDate = new Date(endDate);
-
-  const date = new Date(startDate.getTime());
-  const dates = [];
-
-  while (date <= endDate) {
-    dates.push(new Date(date));
-    date.setDate(date.getDate() + 1);
-  }
-
-  return dates;
 };
 
 export const timeAgo = (time: any) => {
@@ -137,39 +110,6 @@ export const formatDateDistance = (date: string | Date) => {
   }
 };
 
-export const formatLongDateDistance = (date: string | Date) => {
-  const today = new Date();
-  const eventDate = new Date(date);
-  const timeDiff = Math.abs(eventDate.getTime() - today.getTime());
-  const days = Math.ceil(timeDiff / (1000 * 3600 * 24));
-
-  if (days < 1) {
-    const hours = Math.ceil(timeDiff / (1000 * 3600));
-    if (hours < 1) {
-      const minutes = Math.ceil(timeDiff / (1000 * 60));
-      if (minutes < 1) {
-        return "Just now";
-      } else {
-        return `${minutes} minutes`;
-      }
-    } else {
-      return `${hours} hours`;
-    }
-  } else if (days < 7) {
-    if (days === 1) return `${days} day`;
-    return `${days} days`;
-  } else if (days < 30) {
-    if (Math.floor(days / 7) === 1) return `${Math.floor(days / 7)} week`;
-    return `${Math.floor(days / 7)} weeks`;
-  } else if (days < 365) {
-    if (Math.floor(days / 30) === 1) return `${Math.floor(days / 30)} month`;
-    return `${Math.floor(days / 30)} months`;
-  } else {
-    if (Math.floor(days / 365) === 1) return `${Math.floor(days / 365)} year`;
-    return `${Math.floor(days / 365)} years`;
-  }
-};
-
 export const getDateRangeStatus = (startDate: string | null | undefined, endDate: string | null | undefined) => {
   if (!startDate || !endDate) return "draft";
 
@@ -180,19 +120,6 @@ export const getDateRangeStatus = (startDate: string | null | undefined, endDate
   if (start <= now && end >= now) return "current";
   else if (start > now) return "upcoming";
   else return "completed";
-};
-
-export const renderShortDateWithYearFormat = (date: string | Date, placeholder?: string) => {
-  if (!date || date === "") return null;
-
-  date = new Date(date);
-
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const day = date.getDate();
-  const month = months[date.getMonth()];
-  const year = date.getFullYear();
-
-  return isNaN(date.getTime()) ? placeholder ?? "N/A" : ` ${month} ${day}, ${year}`;
 };
 
 export const renderShortDate = (date: string | Date, placeholder?: string) => {
@@ -260,107 +187,6 @@ export const isDateGreaterThanToday = (dateStr: string) => {
   return date > today;
 };
 
-export const renderLongDateFormat = (dateString: string | Date) => {
-  const date = new Date(dateString);
-  const day = date.getDate();
-  const year = date.getFullYear();
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const monthIndex = date.getMonth();
-  const monthName = monthNames[monthIndex];
-  const suffixes = ["st", "nd", "rd", "th"];
-  let suffix = "";
-  if (day === 1 || day === 21 || day === 31) {
-    suffix = suffixes[0];
-  } else if (day === 2 || day === 22) {
-    suffix = suffixes[1];
-  } else if (day === 3 || day === 23) {
-    suffix = suffixes[2];
-  } else {
-    suffix = suffixes[3];
-  }
-  return `${day}${suffix} ${monthName} ${year}`;
-};
-
-/**
- *
- * @returns {Array} Array of time objects with label and value as keys
- */
-
-export const getTimestampAfterCurrentTime = (): Array<{
-  label: string;
-  value: Date;
-}> => {
-  const current = new Date();
-  const time = [];
-  for (let i = 0; i < 24; i++) {
-    const newTime = new Date(current.getTime() + i * 60 * 60 * 1000);
-    time.push({
-      label: newTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-      value: newTime,
-    });
-  }
-  return time;
-};
-
-/**
- * @returns {Array} Array of date objects with label and value as keys
- * @description Returns an array of date objects starting from current date to 7 days after
- */
-
-export const getDatesAfterCurrentDate = (): Array<{
-  label: string;
-  value: Date;
-}> => {
-  const current = new Date();
-  const date = [];
-  for (let i = 0; i < 7; i++) {
-    const newDate = new Date(Math.round(current.getTime() / (30 * 60 * 1000)) * 30 * 60 * 1000);
-    date.push({
-      label: newDate.toLocaleDateString([], {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      }),
-      value: newDate,
-    });
-  }
-  return date;
-};
-
-/**
- * @returns {boolean} true if date is valid
- * @description Returns true if date is valid
- * @param {string} date
- * @example checkIfStringIsDate("2021-01-01") // true
- * @example checkIfStringIsDate("2021-01-32") // false
- */
-
-export const checkIfStringIsDate = (date: string): boolean => new Date(date).toString() !== "Invalid Date";
-
-// return an array of dates starting from 12:00 to 23:30 with 30 minutes interval as dates
-export const getDatesWith30MinutesInterval = (): Array<Date> => {
-  const dates = [];
-  const current = new Date();
-  for (let i = 0; i < 24; i++) {
-    const newDate = new Date(current.getTime() + i * 60 * 60 * 1000);
-    dates.push(newDate);
-  }
-  return dates;
-};
-
 export const getAllTimeIn30MinutesInterval = (): Array<{
   label: string;
   value: string;
@@ -415,8 +241,6 @@ export const findTotalDaysInRange = (startDate: Date | string, endDate: Date | s
 
   return diffInDays;
 };
-
-export const getUserTimeZoneFromWindow = () => Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 /**
  * @returns {number} week number of date

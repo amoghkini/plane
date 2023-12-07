@@ -9,7 +9,7 @@ import { CommentCard } from "components/issues/comment";
 // ui
 import { Loader, Tooltip } from "@plane/ui";
 // helpers
-import { render24HourFormatTime, renderLongDateFormat, timeAgo } from "helpers/date-time.helper";
+import { render24HourFormatTime, renderFormattedDate, timeAgo } from "helpers/date-time.helper";
 // types
 import { IIssueActivity, IIssueComment } from "types";
 import { History } from "lucide-react";
@@ -114,7 +114,7 @@ export const IssueActivitySection: React.FC<Props> = ({
                         )}{" "}
                         {message}{" "}
                         <Tooltip
-                          tooltipContent={`${renderLongDateFormat(activityItem.created_at)}, ${render24HourFormatTime(
+                          tooltipContent={`${renderFormattedDate(activityItem.created_at)}, ${render24HourFormatTime(
                             activityItem.created_at
                           )}`}
                         >

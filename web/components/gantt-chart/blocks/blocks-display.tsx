@@ -4,7 +4,7 @@ import { FC } from "react";
 import { useChart } from "../hooks";
 // helpers
 import { ChartDraggable } from "../helpers/draggable";
-import { renderDateFormat } from "helpers/date-time.helper";
+import { renderFormattedPayloadDate } from "helpers/date-time.helper";
 // types
 import { IBlockUpdateData, IGanttBlock } from "../types";
 
@@ -60,8 +60,8 @@ export const GanttChartBlocks: FC<{
 
     // call the block update handler with the updated dates
     blockUpdateHandler(block.data, {
-      start_date: renderDateFormat(updatedStartDate),
-      target_date: renderDateFormat(updatedTargetDate),
+      start_date: renderFormattedPayloadDate(updatedStartDate) ?? undefined,
+      target_date: renderFormattedPayloadDate(updatedTargetDate) ?? undefined,
     });
   };
 

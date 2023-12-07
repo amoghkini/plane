@@ -11,7 +11,7 @@ import useKeypress from "hooks/use-keypress";
 import useProjectDetails from "hooks/use-project-details";
 import useOutsideClickDetector from "hooks/use-outside-click-detector";
 // helpers
-import { renderDateFormat } from "helpers/date-time.helper";
+import { renderFormattedPayloadDate } from "helpers/date-time.helper";
 // types
 import { IIssue } from "types";
 // helpers
@@ -116,8 +116,8 @@ export const GanttInlineCreateIssueForm: React.FC<Props> = observer((props) => {
     const payload = createIssuePayload(workspaceDetail!, projectDetails!, {
       ...(prePopulatedData ?? {}),
       ...formData,
-      start_date: renderDateFormat(new Date()),
-      target_date: renderDateFormat(new Date(new Date().getTime() + 24 * 60 * 60 * 1000)),
+      start_date: renderFormattedPayloadDate(new Date()),
+      target_date: renderFormattedPayloadDate(new Date(new Date().getTime() + 24 * 60 * 60 * 1000)),
     });
 
     try {

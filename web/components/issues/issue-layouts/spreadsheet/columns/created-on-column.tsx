@@ -3,7 +3,7 @@ import React from "react";
 // hooks
 import useSubIssue from "hooks/use-sub-issue";
 // helpers
-import { renderLongDetailDateFormat } from "helpers/date-time.helper";
+import { renderFormattedDate } from "helpers/date-time.helper";
 // types
 import { IIssue } from "types";
 
@@ -20,7 +20,7 @@ export const SpreadsheetCreatedOnColumn: React.FC<Props> = ({ issue, expandedIss
   return (
     <>
       <div className="flex items-center justify-center text-xs h-full w-full">
-        {renderLongDetailDateFormat(issue.created_at)}
+        {renderFormattedDate(issue.created_at)}
       </div>
 
       {isExpanded &&
